@@ -1,0 +1,217 @@
+Lab 6 - Cookie Stealing
+Please clone the git repository before reading any further. The first thing you should be doing is cloning the git repository onto your computer.
+
+You work as a bakery assistant at the UofACSBakers and have been tasked with a simple job. Find the cookie that a customer wants, and tell them where to find it in the cookie sheet that you have laid out.
+
+The UofACSBakers has a fun mechanic, the customer needs to find their cookie, but if you find their cookie first, you get to eat it (Yum).
+
+Being in CMPUT201, you are the perfect student for the job, you need to be able to find the cookie in the matrix before the customer so you can enjoy that tasty treat.
+
+The customer will always employ a linear search while you can have a chance beating them by speeding up the process using binary search.
+
+The Task
+Your program will take in a file name as input. The first line of this file has 2 integer, m and n.The cookie sheet will have m rows and n columns, for a total of m*n cookies. Each cookie is represented by a cookie-ID, which is a positive integer that fits in a C int. All cookie-IDs provided to you in the first file will be unique, there will be no repeated values. Build your 2D array first, and then proceed with the rest of the work.
+
+Your code will also accept another file name as the second argument, containing a single cookie-ID on each line. For each cookie-ID, you must output how many array accesses each search method took. If the cookie isn't found, you must report -1, -1 as the location.
+
+If the input from either file is invalid, your program must exit with a non-zero exit code. A file is considered "invalid" if it contains something other than an integer or whitespace. If one of the two files provided doesn't exist, you should also exit on a non-zero exit code.
+
+You are given function prototypes to fill out:
+
+sortArray: It takes in the 2D array that you have created using the first file and sorts it in ascending order.
+linearSearch: This function will be used to perform a linear search on the built 2D array.
+binarySearch: This function will be used to perform a binary search on the built 2D array.
+Your task is to sort the 2D array, perform the required searches to find the cookie that the customer wants, and if found, display the locations it was found in the array.
+
+You are also going to be outputting the amount of peeks it took both the searches to find the cookie-ID.
+
+(A peek is the amount of cookie-IDs we looked at before we found the cookie-ID we require.)
+
+You are given access to two global variables that can help you do that.
+
+Examples
+Example Input 1:
+Your program will be invoked like this:
+
+./lab6 file1 file2
+Contents of the file:
+
+file1:
+
+3 3
+9
+1
+7
+4
+3
+6
+8
+2
+5
+file2:
+
+9
+2
+1
+-2
+11
+Example Output 1:
+cookieid: 9
+cookie found?: yes!
+index: 2 2
+peeks for linear search: 9
+peeks for binary search: 4
+cookieid: 2
+cookie found?: yes!
+index: 0 1
+peeks for linear search: 2
+peeks for binary search: 3
+cookieid: 1
+cookie found?: yes!
+index: 0 0
+peeks for linear search: 1
+peeks for binary search: 4
+cookieid: -2
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 9
+peeks for binary search: 2
+cookieid: 11
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 9
+peeks for binary search: 2
+Example Input 2:
+file1:
+
+3 5
+28
+65
+118
+288
+249
+218
+94
+234
+223
+211
+97
+100
+36
+30
+141
+file2:
+
+28
+-4020
+118
+1000
+249
+219
+3000
+224
+220
+97
+94
+1091
+35
+30
+Example Output 2:
+cookieid: 28
+cookie found?: yes!
+index: 0 0
+peeks for linear search: 1
+peeks for binary search: 4
+cookieid: -4020
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 2
+cookieid: 118
+cookie found?: yes!
+index: 1 2
+peeks for linear search: 8
+peeks for binary search: 2
+cookieid: 1000
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 2
+cookieid: 249
+cookie found?: yes!
+index: 2 3
+peeks for linear search: 14
+peeks for binary search: 4
+cookieid: 219
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 5
+cookieid: 3000
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 2
+cookieid: 224
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 5
+cookieid: 220
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 5
+cookieid: 97
+cookie found?: yes!
+index: 1 0
+peeks for linear search: 6
+peeks for binary search: 3
+cookieid: 94
+cookie found?: yes!
+index: 0 4
+peeks for linear search: 5
+peeks for binary search: 5
+cookieid: 1091
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 2
+cookieid: 35
+cookie found?: no!
+index: -1 -1
+peeks for linear search: 15
+peeks for binary search: 5
+cookieid: 30
+cookie found?: yes!
+index: 0 1
+peeks for linear search: 2
+peeks for binary search: 5
+Note that the indices returned are their position in the array after it has been sorted.
+
+Testing
+In this lab we'll be writing our own makefile! You might remember this tool from Lab 4.
+
+makefiles are just simple files that help you compile and test your program faster. They have targets that need to be defined and ran.
+
+You can think of targets as different commands that run certain lines if you call them.
+
+Example
+Imagine you have a makefile that looks like this:
+
+run:
+    echo "Say 'hello world!' to my little friend!"
+
+clean:
+    clear
+In this case, if you invoked make (by default makefiles run the first target if no second argument is supplied) or make run in your terminal, you would have printed that string in your terminal. If you invoke make clean, it will clear your terminal output.
+
+The makefile you will create must have only the following 2 targets:
+
+build: Compiles main.c into an executable called lab6, with the only usual flags (-Wall -Wextra -Werror -std=c99)
+check: Runs the check.sh script on main.c to test your program
+Consider looking at makefiles from the previous labs to get an idea of what to write. You can also use online resources, just remember to cite them. Your makefile will be marked and will be a part of your lab6 marks, so make sure it works and your program can be tested and ran from it!
+
+That's all, good luck!
+
+Remember to commit often.
